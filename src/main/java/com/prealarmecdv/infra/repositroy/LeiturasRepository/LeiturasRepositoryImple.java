@@ -69,4 +69,12 @@ public class LeiturasRepositoryImple implements LeiturasRepository {
                         l.getCorrenteTransmitida(), l.getCorrenteRecebida(), l.getHist(), l.getRx_ratio()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Leituras> findResistance(int kmInicio, int kmFim, double resistencia, LocalDateTime dataInicio, LocalDateTime dataFim) {
+        return this.leiturasJPA.findResistance(kmInicio, kmFim, resistencia, dataInicio, dataFim)
+                .stream().map(l -> Leituras.restore(l.getId(), l.getRemotaId(),
+                        l.getCircuito(), l.getTrack(), l.getResistencia(), l.getCorrenteTransmitida(),
+                        l.getCorrenteRecebida(), l.getHist(), l.getRx_ratio())).collect(Collectors.toList());
+                    }
 }

@@ -28,7 +28,23 @@ public interface LeiturasJPA extends JpaRepository<LeiturasDomain, Long> {
             @Param("dataInicio") LocalDateTime dataInicio,
             @Param("dataFim") LocalDateTime dataFim
     );
-
+    @Query(value = """
+    SELECT l.*
+    FROM tbleituras l
+    JOIN tbremota r ON l.remota_id = r.id
+    WHERE r.address LIKE 'CV km %'
+    AND CAST(SUBSTRING(r.address, 7) AS UNSIGNED) BETWEEN :kmInicio AND :kmFim
+    AND l.resistencia > :resistencia
+    AND l.hist BETWEEN :dataInicio AND :dataFim
+    ORDER BY l.remota_id ASC
+    """, nativeQuery = true)
+    List<LeiturasDomain> findResistance(
+            @Param("kmInicio") int kmInicio,
+            @Param("kmFim") int kmFim,
+            @Param("resistencia") double resistencia,
+            @Param("dataInicio") LocalDateTime dataInicio,
+            @Param("dataFim") LocalDateTime dataFim
+    );
     @Query(value = """
     SELECT l.*
     FROM tbleituras l

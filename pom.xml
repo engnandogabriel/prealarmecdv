@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.prealarmecdv</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>prealarmecdv</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>prealarmecdv</name>
 	<description>Sistema de Pré Alarme de CDV</description>
 	<url/>
 	<licenses>

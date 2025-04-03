@@ -11,4 +11,5 @@ public interface LeiturasRepository {
                                       final double correnteMin, final double correnteMax,
                                       final LocalDateTime dataInicio, final LocalDateTime dataFim);
     List<Leituras> findByAddress(String address, final LocalDateTime dataInicio, final LocalDateTime dataFim);
+    List<Leituras> findResistance(final int kmInicio, final int kmFim, final double resistencia, final LocalDateTime dataInicio, final LocalDateTime dataFim);
 };

@@ -1,6 +1,7 @@
 package com.prealarmecdv.controller;
 import com.prealarmecdv.application.usecases.*;
 import com.prealarmecdv.domain.DTO.FindAnomaliasDTO;
+import com.prealarmecdv.domain.DTO.FindResistanceAnomalias;
 import com.prealarmecdv.domain.Response.Response;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,17 @@ public class LeiturasController {
     private ListByAddress listByAddress;
     private FindByAnomalias findByAnomalias;
     private GetAllAddress getAllAddress;
+    private FindByResistanceAnomalias findByResistanceAnomalias;
 
-    public LeiturasController(ListAllLeituras listAllLeituras, ListByDistrict listByDistrict, ListByAddress listByAddress, FindByAnomalias findByAnomalias, GetAllAddress getAllAddress) {
+    public LeiturasController(ListAllLeituras listAllLeituras, ListByDistrict listByDistrict,
+                              ListByAddress listByAddress, FindByAnomalias findByAnomalias,
+                              GetAllAddress getAllAddress, FindByResistanceAnomalias findByResistanceAnomalias) {
         this.listAllLeituras = listAllLeituras;
         this.listByDistrict = listByDistrict;
         this.listByAddress = listByAddress;
         this.findByAnomalias = findByAnomalias;
         this.getAllAddress = getAllAddress;
+        this.findByResistanceAnomalias = findByResistanceAnomalias;
     }
 
     @GetMapping
@@ -53,7 +58,7 @@ public class LeiturasController {
         Response response = this.getAllAddress.execute();
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
     }
-    @GetMapping("/anomalias")
+    @GetMapping("/anomalias/corrente")
     public ResponseEntity<Response> findAnomalias(@RequestParam(name = "distrito") String distrito,
                                                   @RequestParam(name = "correnteMin") Double correnteMin,
                                                   @RequestParam(name = "correnteMax") Double correnteMax,
@@ -61,6 +66,15 @@ public class LeiturasController {
     ){
         FindAnomaliasDTO data = new FindAnomaliasDTO(correnteMin, correnteMax, dataInicio);
         Response response = this.findByAnomalias.execute(distrito, data);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+    }
+    @GetMapping("/anomalias/resistencia")
+    public ResponseEntity<Response> findAnomaliasResistencia(@RequestParam(name = "distrito") String distrito,
+                                                             @RequestParam(name = "resistencia") Double resistencia,
+                                                             @RequestParam(name = "dataInicio") LocalDateTime dataInicio
+    ){
+        FindResistanceAnomalias data = new FindResistanceAnomalias(resistencia, dataInicio);
+        Response response = this.findByResistanceAnomalias.execute(distrito, data);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
     }
 }
