@@ -6,5 +6,5 @@ import java.util.Optional;
 public interface RemotaRepository {
     Optional<Remotas> getById(Long id);
     List<Remotas> findAllById(Iterable<Long> ids);
-    List<String> getAllAddress();
+    List<Remotas> getAllAddress();
 }

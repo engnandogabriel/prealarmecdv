@@ -14,7 +14,7 @@ public interface LeiturasJPA extends JpaRepository<LeiturasDomain, Long> {
     SELECT l.*
     FROM tbleituras l
     JOIN tbremota r ON l.remota_id = r.id
-    WHERE r.address LIKE 'CV km %'
+    WHERE ( r.address LIKE 'CV km %' OR r.address LIKE 'TU km %')
     AND CAST(SUBSTRING(r.address, 7) AS UNSIGNED) BETWEEN :kmInicio AND :kmFim
     AND l.corrente_recebida BETWEEN :correnteMin AND :correnteMax
     AND l.hist BETWEEN :dataInicio AND :dataFim
@@ -32,7 +32,7 @@ public interface LeiturasJPA extends JpaRepository<LeiturasDomain, Long> {
     SELECT l.*
     FROM tbleituras l
     JOIN tbremota r ON l.remota_id = r.id
-    WHERE r.address LIKE 'CV km %'
+    WHERE ( r.address LIKE 'CV km %' OR r.address LIKE 'TU km %')
     AND CAST(SUBSTRING(r.address, 7) AS UNSIGNED) BETWEEN :kmInicio AND :kmFim
     AND l.resistencia > :resistencia
     AND l.hist BETWEEN :dataInicio AND :dataFim

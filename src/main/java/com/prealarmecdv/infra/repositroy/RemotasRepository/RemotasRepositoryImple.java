@@ -35,7 +35,12 @@ public class RemotasRepositoryImple implements RemotaRepository {
     }
 
     @Override
-    public List<String> getAllAddress() {
-        return this.remotaJPA.getAllAddress();
+    public List<Remotas> getAllAddress() {
+        return this.remotaJPA.findAll()
+                .stream()
+                .map(r -> Remotas.restore(r.getRemotaId(), r.getLocalId(),
+                        r.getIp(),r.getDescricao(),r.getName(),r.getRailroad(),r.getSubdivision(),
+                        r.getAddress(),r.getSite_id(),r.getChassis_id(),r.getChecksumSwExec(),
+                        r.getSwDate(),r.getAtiva(), r.getHist())).collect(Collectors.toList());
     }
 }
